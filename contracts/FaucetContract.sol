@@ -2,24 +2,26 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Faucet {
-    address[] public funders;
-    // External means that even other contracts and txs can call that 
-    // function and these functions are part contract interface
-    // This is a special even called when no function named is mentioned to call.
-    receive() external payable {}
-    function addfunds() external payable{
-        funders.push(msg.sender);
+    // Think mapping as key-value pair.
+    uint public numOfFunders;
+    mapping (uint => address) public funders;
+    
+    function addFunders() external payable {
+        uint index = numOfFunders++;
+        funders[index] = msg.sender;
     }
-    // connect to ganache and get all funders
-    function getAllfunders() public view returns(address[] memory) {
-        return funders;
+    function getFunderAtIndex(uint index) external view returns(address) {
+       return funders[index];
     }
-    // connect to ganache and get funder at particular index.
-    function getFunderAtIndex(uint8 index) external view returns(address) {
-        address[] memory _funders = getAllfunders();
-        return _funders[index];
-    } 
+    function getAllFunders() external view returns(address[] memory) {
+        address [] memory _funders = new address[](numOfFunders);
+        for(uint i = 0; i < numOfFunders; i++) {
+          _funders[i] = funders[i];
+        }
+        return _funders;
+    }
+
 }
 
-
 // const instance = await Faucet.deployed()
+// instance.addFunders({ from:accounts[8] , value:"25000000000000000000"})

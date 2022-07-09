@@ -1,16 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
+import "./Owned.sol";
 
-contract Faucet {
+contract Faucet is Owned {
     // Think mapping as key-value pair.
     uint256 public numOfFunders;
-    address public owner;
     mapping(address => bool) public funders;
     mapping(uint256 => address) public lutfunders;
-
-    constructor() {
-        owner = msg.sender;
-    }
 
     modifier limitWithDraw(uint256 withDrawAmount) {
         require(
@@ -19,14 +15,7 @@ contract Faucet {
         );
         _;
     }
-    modifier isOwner {
-        require(
-            msg.sender == owner, 
-            "You don't have permission dumb fuck!"
-        );
-        _;
-    } 
-
+    
     function addFunders() external payable {
         address funder = msg.sender;
         if (!funders[funder]) {

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 import "./Owned.sol";
+import "./Logger.sol";
 
-contract Faucet is Owned {
+contract Faucet is Owned, Logger {
     // Think mapping as key-value pair.
     uint256 public numOfFunders;
     mapping(address => bool) public funders;
@@ -15,7 +16,7 @@ contract Faucet is Owned {
         );
         _;
     }
-    
+
     function addFunders() external payable {
         address funder = msg.sender;
         if (!funders[funder]) {
@@ -43,7 +44,9 @@ contract Faucet is Owned {
         }
         return _funders;
     }
-
+    function emitLog() public override pure returns(bytes32) {
+        return "Hello World";
+    }
     function test1() external isOwner {
         // some logic that only admin can do!
     }

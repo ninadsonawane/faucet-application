@@ -2,8 +2,9 @@
 pragma solidity >=0.4.22 <0.9.0;
 import "./Owned.sol";
 import "./Logger.sol";
+import "./IFaucet.sol";
 
-contract Faucet is Owned, Logger {
+contract Faucet is Owned, Logger ,IFaucet {
     // Think mapping as key-value pair.
     uint256 public numOfFunders;
     mapping(address => bool) public funders;

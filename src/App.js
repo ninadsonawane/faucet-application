@@ -1,25 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <div class="flex h-screen">
+    <div class="m-auto">
+      <h3 className="text-2xl">Current Balance : <strong>10</strong> ETH</h3>
+      <button className="w-24 bg-blue-200 rounded-md">Donate</button>
+      <button className="w-24 bg-blue-200 rounded-md	ml-1">Withdraw</button>
 
-export default App;
+    </div>
+  </div>
+  )
+}

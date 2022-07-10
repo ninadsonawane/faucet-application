@@ -10,12 +10,17 @@ export default function App() {
   })
   const [account , setAccount] = useState(null);
   const [balance , setBalance] = useState(null);
+
+  const setAccountListener = provider => {
+    provider.on("accountsChanged", accounts => setAccount(accounts[0]))
+  }
  
   useEffect(() => {
     const loadProvider = async () => {
       const provider = await detectEthereumProvider()
       const contract = await loadContract("Faucet" , provider);
       if(provider) {
+        setAccountListener(provider)
         setWeb3Api({
           web3: new Web3(provider),
           provider,
@@ -65,7 +70,7 @@ export default function App() {
 
   return (
     <>
-      <div className="faucet-wrapper">
+      <div className="faucet-wrapper mt-5 ml-5">
         <div className="faucet">
           <div className="is-flex is-align-items-center">
             <span>
@@ -88,7 +93,7 @@ export default function App() {
           </div>
           <button
             onClick={addFunds}
-            className="button is-link mr-2">Donate 1 ETH</button>
+            className="button is-link mr-2">Donate 0.5 ETH</button>
           <button
             onClick={withDraw}
             className="button is-primary">Withdraw</button>
